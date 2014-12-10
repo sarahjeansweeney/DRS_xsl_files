@@ -4,6 +4,7 @@
     xmlns:mods="http://www.loc.gov/mods/v3"
     exclude-result-prefixes="xs" version="2.0">
     <xsl:output indent="yes" method="xml"/>
+    <xsl:strip-space elements="*"/>
     <xsl:template match="DISS_submission">
         <mods:mods xmlns:mods="http://www.loc.gov/mods/v3"
             xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
@@ -22,6 +23,7 @@
                     <xsl:text></xsl:text>
                 </mods:title>
             </mods:titleInfo>
+            
             
             <xsl:for-each select="DISS_authorship/DISS_author | DISS_description/DISS_advisor | DISS_description/DISS_cmte_member">
                 <mods:name type="personal">
@@ -137,18 +139,21 @@
                 <xsl:call-template name="keywordsplitter2">
                     <xsl:with-param name="keyword" select="DISS_description/DISS_categorization/DISS_keyword"/>
                 </xsl:call-template>
+            </mods:subject>
             
-            
-                <mods:topic authority="lcsh">
+            <mods:subject authority="lcsh">
+                <mods:topic>
                     <xsl:text></xsl:text>
                 </mods:topic>
-                          
-                <xsl:for-each select="DISS_description/DISS_categorization/DISS_category/DISS_cat_desc">
-                    <mods:topic authority="discipline">
+            </mods:subject>
+            
+            <mods:subject authority="discipline">
+                <xsl:for-each select="DISS_description/DISS_categorization/DISS_category/DISS_cat_desc">            
+                    <mods:topic>
                         <xsl:value-of select="."/>
-                    </mods:topic>
+                    </mods:topic>               
                 </xsl:for-each>
-            </mods:subject> 
+            </mods:subject>
             
           <!--Revisions?  -->
             <mods:identifier type="hdl">
