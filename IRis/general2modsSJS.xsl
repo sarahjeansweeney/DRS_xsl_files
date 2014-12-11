@@ -11,13 +11,96 @@
             xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
 
             <!-- This is the stylesheet for the transformation of faculty publications and general IRis works (any xml file in the archive that does not have "aes", "art_book", "books", "diss", "theses", or "honors_projects" in the file name) -->
+            <!-- To Do: Capitalize controlled vocabulary (in Wiki, too) -->
 
             <!-- BEPRESS : <title> -->
 
             <mods:titleInfo>
-                <mods:title>
-                    <xsl:value-of select="title"/>
-                </mods:title>
+                <xsl:choose>
+                    <xsl:when test="starts-with(title, 'The ')">
+                        <mods:nonSort>
+                            <xsl:text>The</xsl:text>
+                        </mods:nonSort>
+                        <mods:title>
+                            <xsl:choose>
+                                <xsl:when test="contains(title, ':')">
+                                    <xsl:value-of select="substring-before(substring-after(title, 'The '), ':')"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="substring-after(title, 'The ')"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </mods:title>
+                        <xsl:if test="contains(title, ': ')">
+                            <mods:subTitle>
+                                <xsl:value-of select="substring-after(title, ': ')"/>
+                            </mods:subTitle>
+                        </xsl:if>
+                    </xsl:when>
+                    
+                    <xsl:when test="starts-with(title, 'A ')">
+                        <mods:nonSort>
+                            <xsl:text>A</xsl:text>
+                        </mods:nonSort>
+                        <mods:title>
+                            <xsl:choose>
+                                <xsl:when test="contains(title, ':')">
+                                    <xsl:value-of select="substring-before(substring-after(title, 'A '), ':')"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="substring-after(title, 'A ')"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </mods:title>
+                        <xsl:if test="contains(title, ': ')">
+                            <mods:subTitle>
+                                <xsl:value-of select="substring-after(title, ': ')"/>
+                            </mods:subTitle>
+                        </xsl:if>
+                    </xsl:when>
+                    
+                    <xsl:when test="starts-with(title, 'An ')">
+                        <mods:nonSort>
+                            <xsl:text>An</xsl:text>
+                        </mods:nonSort>
+                        <mods:title>
+                            <xsl:choose>
+                                <xsl:when test="contains(title, ':')">
+                                    <xsl:value-of select="substring-before(substring-after(title, 'An '), ':')"/>
+                                </xsl:when>
+                                <xsl:otherwise>
+                                    <xsl:value-of select="substring-after(title, 'An ')"/>
+                                </xsl:otherwise>
+                            </xsl:choose>
+                        </mods:title>
+                        <xsl:if test="contains(title, ': ')">
+                            <mods:subTitle>
+                                <xsl:value-of select="substring-after(title, ': ')"/>
+                            </mods:subTitle>
+                        </xsl:if>
+                    </xsl:when>
+                    
+                    <xsl:otherwise>
+                        <xsl:choose>
+                            <xsl:when test="contains(title, ': ')">
+                                <mods:title>
+                                    <xsl:value-of select="substring-before(title, ':')"/>
+                                </mods:title>
+                                <mods:subTitle>
+                                    <xsl:value-of select="substring-after(title, ': ')"/>
+                                </mods:subTitle>
+                            </xsl:when>
+                            <xsl:otherwise>
+                                <mods:title>
+                                    <xsl:value-of select="title"/>
+                                </mods:title>
+                            </xsl:otherwise>
+                        </xsl:choose>
+                        
+                    </xsl:otherwise>
+                </xsl:choose>
+                
+                
             </mods:titleInfo>
 
             <!-- BEPRESS : <field name="alt_title" type="string"> -->
@@ -53,9 +136,11 @@
                                 </xsl:if>
                             </mods:namePart>
                             <xsl:if test="institution">
+                                <xsl:for-each select="institution">
                                 <mods:affiliation>
-                                    <xsl:value-of select="institution"/>
+                                    <xsl:value-of select="."/>
                                 </mods:affiliation>
+                                </xsl:for-each>
                             </xsl:if>
                             <mods:role>
                                 <mods:roleTerm authority="marcrelator" type="text">
@@ -114,6 +199,7 @@
             </mods:typeOfResource>
 
             <!-- BEPRESS : <document-type> -->
+
             <mods:genre authority="aat">
                 <xsl:choose>
                     <xsl:when test="document-type='article'">
@@ -125,11 +211,11 @@
                     </xsl:when>
 
                     <xsl:when test="document-type='bookreview'">
-                        <xsl:text>reviews (document genre)</xsl:text>
+                        <xsl:text>reviews</xsl:text>
                     </xsl:when>
 
                     <xsl:when test="document-type='conference'">
-                        <xsl:text>proceedings</xsl:text>
+                        <xsl:text>proceedings </xsl:text>
                     </xsl:when>
 
                     <xsl:when test="document-type='dataset'">
@@ -149,7 +235,7 @@
                     </xsl:when>
 
                     <xsl:when test="document-type='presentation'">
-                        <xsl:text>presentations (communicative events)</xsl:text>
+                        <xsl:text>presentations</xsl:text>
                     </xsl:when>
 
                     <xsl:when test="document-type='press_release'">
@@ -165,11 +251,11 @@
                     </xsl:when>
 
                     <xsl:when test="document-type='still_image'">
-                        <xsl:text>digital images</xsl:text>
+                        <xsl:text>photographs</xsl:text>
                     </xsl:when>
 
                     <xsl:when test="document-type='text'">
-                        <xsl:text>texts (document genres)</xsl:text>
+                        <xsl:text>texts</xsl:text>
                     </xsl:when>
 
                     <xsl:otherwise>
@@ -186,9 +272,6 @@
                         <xsl:value-of select="fields/field[@name='publisher']/value"/>
                     </mods:publisher>
                 </xsl:if>
-
-
-                <!-- PATRICK: The code in question is the xsl:choose below -->
 
                 <!-- BEPRESS : <publication-date | rights_information> -->
                 <xsl:choose>
@@ -215,8 +298,8 @@
 
             <!-- BEPRESS : not mapped from IRis -->
             <mods:language>
-                <mods:languageTerm authority="iso639-2b" type="code">
-                    <xsl:text>eng</xsl:text>
+                <mods:languageTerm authority="iso639-2b" type="text">
+                    <xsl:text>English</xsl:text>
                 </mods:languageTerm>
             </mods:language>
 
@@ -247,6 +330,7 @@
                 </mods:note>
             </xsl:if>
 
+          
             <!-- BEPRESS : <subject-areas> <subject-area> -->
             <xsl:if test="subject-areas/subject-area">
                 <xsl:for-each select="subject-areas/subject-area">
@@ -273,24 +357,61 @@
             <xsl:if test="disciplines/discipline">
                 <xsl:for-each select="disciplines/discipline">
                     <mods:subject>
-                        <mods:topic authority="discipline">
+                        <mods:topic>
                             <xsl:value-of select="."/>
                         </mods:topic>
                     </mods:subject>
                 </xsl:for-each>
             </xsl:if>
 
+
             <!-- BEPRESS : <field name="external_url" type="string"> -->
 
-            <mods:identifier type="hdl">
+            <mods:identifier type="hdl" displayLabel="Permanent Link">
                 <xsl:value-of
-                    select="replace(fields/field[@name='external_url']/value, '^.*$&gt;(.*?)&lt;.*?$', '$1')"
+                    select="replace(fields/field[@name='external_url']/value, '^.*?&gt;(.*?)&lt;.*?$', '$1')"
                 />
             </mods:identifier>
+
+            <!-- RIGHTS INFORMATION -->
+            
+
+            
+            <mods:accessCondition type="use and reproduction">
+                
+                            <!-- BEPRESS : <field name="rights_holder" type="string">-->
+            
+            <!--            <xsl:if test="fields/field[@name='rights_holder']">
+                <mods:note type="rights_holder">
+                    <xsl:value-of select="fields/field[@name='rights_holder']/value"/>
+                </mods:note>
+            </xsl:if>-->
+            
+            <!--BEPRESS : <field name="rights_information" type="string">-->
+            
+            <!--            <xsl:if test="fields/field[@name='rights_information']">
+                <mods:note type="rights_information">
+                    <xsl:value-of select="replace(fields/field[@name='rights_information']/value, '.([0-9]*)', '$1')"/>
+                </mods:note>
+                
+                <mods:note type="rights_information">
+                    <xsl:value-of select="fields/field[@name='rights_information']/value"/>
+                </mods:note>
+            </xsl:if>-->
+            
+            <!-- BEPRESS : <field name="restrictions" type="string"> -->
+            
+            <!--            <xsl:if test="fields/field[@name='restrictions']">
+                <mods:note type="restrictions">
+                    <xsl:value-of select="fields/field[@name='restrictions']/value"/>
+                </mods:note>
+            </xsl:if>-->
+                
+            </mods:accessCondition>
+            
 
         </mods:mods>
 
     </xsl:template>
 
 </xsl:stylesheet>
-<!-- Last updated by Sarah Sweeney 10/4/12 -->
