@@ -1,17 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform"
-    xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mods="http://www.loc.gov/mods/v3"
-    exclude-result-prefixes="xs" version="2.0">
+<xsl:stylesheet xmlns:xsl="http://www.w3.org/1999/XSL/Transform" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:mods="http://www.loc.gov/mods/v3" exclude-result-prefixes="xs" version="2.0">
     <xsl:strip-space elements="*"/>
     <xsl:output indent="yes" method="xml"/>
     <xsl:template match="/documents/document">
 
-        <mods:mods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-            xmlns:mods="http://www.loc.gov/mods/v3"
-            xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
+        <mods:mods xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:mods="http://www.loc.gov/mods/v3" xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-4.xsd">
 
-            <!-- This is the stylesheet for the transformation of faculty publications and general IRis works (any xml file in the archive that does not have "aes", "art_book", "books", "diss", "theses", or "honors_projects" in the file name) -->
-            <!-- To Do: Capitalize controlled vocabulary (in Wiki, too) -->
+            <!-- This is the stylesheet for the transformation of general IRis works (any xml file in the archive that does not have "aes", "art_book", "books", "diss", "theses", or "honors_projects" in the file name) -->
 
             <!-- BEPRESS : <title> -->
 
@@ -37,7 +32,7 @@
                             </mods:subTitle>
                         </xsl:if>
                     </xsl:when>
-                    
+
                     <xsl:when test="starts-with(title, 'A ')">
                         <mods:nonSort>
                             <xsl:text>A</xsl:text>
@@ -58,7 +53,7 @@
                             </mods:subTitle>
                         </xsl:if>
                     </xsl:when>
-                    
+
                     <xsl:when test="starts-with(title, 'An ')">
                         <mods:nonSort>
                             <xsl:text>An</xsl:text>
@@ -79,7 +74,7 @@
                             </mods:subTitle>
                         </xsl:if>
                     </xsl:when>
-                    
+
                     <xsl:otherwise>
                         <xsl:choose>
                             <xsl:when test="contains(title, ': ')">
@@ -96,11 +91,11 @@
                                 </mods:title>
                             </xsl:otherwise>
                         </xsl:choose>
-                        
+
                     </xsl:otherwise>
                 </xsl:choose>
-                
-                
+
+
             </mods:titleInfo>
 
             <!-- BEPRESS : <field name="alt_title" type="string"> -->
@@ -137,9 +132,9 @@
                             </mods:namePart>
                             <xsl:if test="institution">
                                 <xsl:for-each select="institution">
-                                <mods:affiliation>
-                                    <xsl:value-of select="."/>
-                                </mods:affiliation>
+                                    <mods:affiliation>
+                                        <xsl:value-of select="."/>
+                                    </mods:affiliation>
                                 </xsl:for-each>
                             </xsl:if>
                             <mods:role>
@@ -186,7 +181,7 @@
             <!-- BEPRESS : <type> -->
 
             <mods:typeOfResource>
-            <!-- text, cartographic, notated music, sound recording-musical, sound recording-nonmusical, sound recording, still image, moving image, three dimensional object, software, multimedia, mixed material  -->
+                <!-- text, cartographic, notated music, sound recording-musical, sound recording-nonmusical, sound recording, still image, moving image, three dimensional object, software, multimedia, mixed material  -->
                 <xsl:choose>
                     <xsl:when test="document-type='still_image'">
                         <xsl:text>still image</xsl:text>
@@ -274,26 +269,12 @@
                 </xsl:if>
 
                 <!-- BEPRESS : <publication-date | rights_information> -->
-                <xsl:choose>
 
-                    <xsl:when
-                        test="contains(fields/field[@name='rights_information']/value, '1') or contains(fields/field[@name='rights_information']/value, '2')">
-                        <mods:copyrightDate encoding="w3cdtf" keyDate="yes">
-                            <xsl:value-of
-                                select="replace(fields/field[@name='rights_information']/value, '.(\d{4,4})?', '$1')"/>
-                            <!-- when there are multiple 4 digit numbers in this field, they are repeated in the transformation with no spaces. needs to be fixed. -->
-                        </mods:copyrightDate>
-                    </xsl:when>
-
-                    <xsl:otherwise>
-                        <xsl:if test="publication-date">
-                            <mods:dateIssued encoding="w3cdtf" keyDate="yes">
-                                <xsl:value-of select="substring-before(publication-date, 'T')"/>
-                            </mods:dateIssued>
-                        </xsl:if>
-                    </xsl:otherwise>
-
-                </xsl:choose>
+                <xsl:if test="publication-date">
+                    <mods:dateIssued encoding="w3cdtf" keyDate="yes">
+                        <xsl:value-of select="substring-before(publication-date, 'T')"/>
+                    </mods:dateIssued>
+                </xsl:if>
             </mods:originInfo>
 
             <!-- BEPRESS : not mapped from IRis -->
@@ -306,11 +287,11 @@
             <!-- BEPRESS : not mapped from IRis -->
             <mods:physicalDescription>
                 <mods:form authority="marcform">
-                <!-- braille, electronic, microfiche, microfilm, print, large print  -->
+                    <!-- braille, electronic, microfiche, microfilm, print, large print  -->
                     <xsl:text>electronic</xsl:text>
                 </mods:form>
                 <mods:digitalOrigin>
-                <!-- born digital, reformatted digital, digitized microfilm, digitized other analog -->
+                    <!-- born digital, reformatted digital, digitized microfilm, digitized other analog -->
                     <xsl:text>born digital</xsl:text>
                 </mods:digitalOrigin>
             </mods:physicalDescription>
@@ -330,7 +311,7 @@
                 </mods:note>
             </xsl:if>
 
-          
+
             <!-- BEPRESS : <subject-areas> <subject-area> -->
             <xsl:if test="subject-areas/subject-area">
                 <xsl:for-each select="subject-areas/subject-area">
@@ -368,48 +349,34 @@
             <!-- BEPRESS : <field name="external_url" type="string"> -->
 
             <mods:identifier type="hdl" displayLabel="Permanent Link">
-                <xsl:value-of
-                    select="replace(fields/field[@name='external_url']/value, '^.*?&gt;(.*?)&lt;.*?$', '$1')"
-                />
+                <xsl:value-of select="replace(fields/field[@name='external_url']/value, '^.*?&gt;(.*?)&lt;.*?$', '$1')"/>
             </mods:identifier>
 
             <!-- RIGHTS INFORMATION -->
-            
 
-            
+
+            <xsl:if test="fields/field[@name='rights_information'] or fields/field[@name='rights_holder']">
             <mods:accessCondition type="use and reproduction">
-                
-                            <!-- BEPRESS : <field name="rights_holder" type="string">-->
-            
-            <!--            <xsl:if test="fields/field[@name='rights_holder']">
-                <mods:note type="rights_holder">
-                    <xsl:value-of select="fields/field[@name='rights_holder']/value"/>
-                </mods:note>
-            </xsl:if>-->
-            
-            <!--BEPRESS : <field name="rights_information" type="string">-->
-            
-            <!--            <xsl:if test="fields/field[@name='rights_information']">
-                <mods:note type="rights_information">
-                    <xsl:value-of select="replace(fields/field[@name='rights_information']/value, '.([0-9]*)', '$1')"/>
-                </mods:note>
-                
-                <mods:note type="rights_information">
-                    <xsl:value-of select="fields/field[@name='rights_information']/value"/>
-                </mods:note>
-            </xsl:if>-->
-            
-            <!-- BEPRESS : <field name="restrictions" type="string"> -->
-            
-            <!--            <xsl:if test="fields/field[@name='restrictions']">
-                <mods:note type="restrictions">
-                    <xsl:value-of select="fields/field[@name='restrictions']/value"/>
-                </mods:note>
-            </xsl:if>-->
-                
-            </mods:accessCondition>
-            
 
+                <xsl:if test="fields/field[@name='rights_information']/value">
+                    <xsl:value-of select="fields/field[@name='rights_information']/value"/>
+                </xsl:if>
+
+                <xsl:if test="fields/field[@name='rights_holder']">
+                    <xsl:choose>
+                        <xsl:when test="fields/field[@name='rights_information']/value">
+                        <xsl:text>, </xsl:text>
+                    </xsl:when>
+                       <xsl:otherwise>
+                           <xsl:text>Rights holder: </xsl:text>
+                       </xsl:otherwise>
+                    </xsl:choose>
+                   
+                    <xsl:value-of select="fields/field[@name='rights_holder']/value"/>
+                </xsl:if>
+
+            </mods:accessCondition>
+            </xsl:if>
         </mods:mods>
 
     </xsl:template>
