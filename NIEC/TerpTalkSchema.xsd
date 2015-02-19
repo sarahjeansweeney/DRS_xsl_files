@@ -1,0 +1,493 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" elementFormDefault="qualified"
+  targetNamespace="http://www.northeastern.edu/niec/niecv1"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xmlns:niec="http://www.northeastern.edu/niec/niecv1">
+
+  <!-- Last updated 09/26/14 sjs -->
+
+  <!-- Element Set -->
+
+  <xs:element name="niec">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <!-- xs:choice or xs:sequence? -->
+        <xs:element ref="niec:identifier"/>
+        <xs:element ref="niec:title"/>
+        <xs:element ref="niec:description"/>
+        <xs:element ref="niec:name"/>
+        <xs:element ref="niec:origin"/>
+        <xs:element ref="niec:languageInformation"/>
+        <xs:element ref="niec:contentDescription"/>
+        <xs:element ref="niec:transcript"/>
+        <xs:element ref="niec:series"/>
+        <xs:element ref="niec:comment"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Identifier -->
+
+  <xs:element name="identifier">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="type" use="required">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="local"/>
+                <xs:enumeration value="hdl"/>
+                <xs:enumeration value="vimeo"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Title -->
+
+  <xs:element name="title">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="type">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="alternative"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Description -->
+  
+  <xs:element name="description"/>
+  
+  <!-- Name -->
+
+  <xs:element name="name">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element minOccurs="1" maxOccurs="1" ref="niec:fullName"/>
+        <xs:element minOccurs="0" maxOccurs="unbounded" ref="niec:role"/>
+        <xs:element minOccurs="0" maxOccurs="1" ref="niec:speakerInformation"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="fullName">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="authority">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="local"/>
+                <xs:enumeration value="lcnaf"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="type" use="required">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="Personal"/>
+                <xs:enumeration value="Higher Ed."/>
+                <xs:enumeration value="Organizational"/>
+                <xs:enumeration value="Other"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="role">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="authority" use="required">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="marcrelator"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="speakerInformation">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element maxOccurs="1" ref="niec:gender"/>
+        <xs:element maxOccurs="1" ref="niec:age"/>
+        <xs:element maxOccurs="unbounded" ref="niec:race"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+
+  <xs:element name="gender">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Female"/>
+        <xs:enumeration value="Male"/>
+        <xs:enumeration value="Transgender"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="age">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Child"/>
+        <xs:enumeration value="Young Adult"/>
+        <xs:enumeration value="Adult"/>
+        <xs:enumeration value="Ageless (65+)"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="race">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="American Indian/Alaskan Native"/>
+        <xs:enumeration value="Asian"/>
+        <xs:enumeration value="Black or African American"/>
+        <xs:enumeration value="Hispanic or Latino"/>
+        <xs:enumeration value="Native Hawaiian/Other Pacific Islander"/>
+        <xs:enumeration value="White"/>
+        <xs:enumeration value="Other"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <!-- Origin -->
+
+  <xs:element name="origin">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="niec:publicationInformation"/>
+        <xs:element ref="niec:distributionInformation"/>
+        <xs:element ref="niec:dateCreated"/>
+        <xs:element ref="niec:dateIssued"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Publisher -->
+
+  <xs:element name="publicationInformation">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="niec:publisherName"/>
+        <xs:element ref="niec:publicationDate"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="publisherName" type="xs:string"/>
+  <xs:element name="publicationDate" type="xs:string"/>
+
+  <!-- Distributor -->
+
+  <xs:element name="distributionInformation">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="niec:distributorName"/>
+        <xs:element ref="niec:distributionDate"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="distributorName" type="xs:string"/>
+  <xs:element name="distributionDate" type="xs:string"/>
+
+  <!-- Other Dates -->
+
+  <xs:element name="dateCreated" type="xs:string"/>
+
+  <xs:element name="dateIssued" type="xs:string"/>
+
+  <!-- Language -->
+
+  <xs:element name="languageInformation">
+    <xs:complexType>
+      <xs:choice minOccurs="1" maxOccurs="unbounded">
+        <xs:element ref="niec:signedLanguage"/>
+        <xs:element ref="niec:spokenLanguage"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+
+  <!-- Signed Language -->
+
+  <xs:element name="signedLanguage">
+    <xs:complexType>
+      <xs:choice maxOccurs="unbounded">
+        <xs:element minOccurs="1" ref="niec:language"/>
+        <!-- Need to make language required? -->
+        <xs:element minOccurs="0" ref="niec:signPace"/>
+        <xs:element minOccurs="0" ref="niec:fingerspellingExtent"/>
+        <xs:element minOccurs="0" ref="niec:fingerspellingPace"/>
+        <xs:element minOccurs="0" ref="niec:numbersExtent"/>
+        <xs:element minOccurs="0" ref="niec:numbersPace"/>
+        <xs:element minOccurs="0" ref="niec:classifiersExtent"/>
+        <xs:element minOccurs="0" ref="niec:useOfSpaceExtent"/>
+        <xs:element minOccurs="0" ref="niec:howSpaceUsed"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="language">
+    <xs:complexType>
+      <xs:simpleContent>
+        <xs:extension base="xs:string">
+          <xs:attribute name="authority" use="required">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="local"/>
+                <xs:enumeration value="iso639-2b"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+          <xs:attribute name="type" use="required">
+            <xs:simpleType>
+              <xs:restriction base="xs:string">
+                <xs:enumeration value="text"/>
+                <xs:enumeration value="code"/>
+              </xs:restriction>
+            </xs:simpleType>
+          </xs:attribute>
+        </xs:extension>
+      </xs:simpleContent>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="signPace">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Slow"/>
+        <xs:enumeration value="Moderate"/>
+        <xs:enumeration value="Fast"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="fingerspellingExtent">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Minimal"/>
+        <xs:enumeration value="Moderate"/>
+        <xs:enumeration value="Extensive"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="fingerspellingPace">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Slow"/>
+        <xs:enumeration value="Moderate"/>
+        <xs:enumeration value="Fast"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="numbersExtent">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Minimal"/>
+        <xs:enumeration value="Moderate"/>
+        <xs:enumeration value="Extensive"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="numbersPace">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Slow"/>
+        <xs:enumeration value="Moderate"/>
+        <xs:enumeration value="Fast"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="classifiersExtent">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Minimal"/>
+        <xs:enumeration value="Moderate"/>
+        <xs:enumeration value="Extensive"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="useOfSpaceExtent">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Minimal"/>
+        <xs:enumeration value="Moderate"/>
+        <xs:enumeration value="Extensive"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="howSpaceUsed">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Comparative"/>
+        <xs:enumeration value="Characterization"/>
+        <xs:enumeration value="Geographic"/>
+        <xs:enumeration value="Episodic"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <!-- Spoken Language -->
+
+  <xs:element name="spokenLanguage">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="niec:language"/>
+        <xs:element ref="niec:speechPace"/>
+        <xs:element ref="niec:lendsItselfToFingerspelling"/>
+        <xs:element ref="niec:lendsItselfToClassifiers"/>
+        <xs:element ref="niec:lendsItselfToNumbers"/>
+        <xs:element ref="niec:lendsItselfToUseofSpace"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="speechPace">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Slow"/>
+        <xs:enumeration value="Moderate"/>
+        <xs:enumeration value="Fast"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="lendsItselfToFingerspelling">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Minimal"/>
+        <xs:enumeration value="Moderate"/>
+        <xs:enumeration value="Extensive"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="lendsItselfToClassifiers">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Minimal"/>
+        <xs:enumeration value="Moderate"/>
+        <xs:enumeration value="Extensive"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="lendsItselfToNumbers">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Minimal"/>
+        <xs:enumeration value="Moderate"/>
+        <xs:enumeration value="Extensive"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="lendsItselfToUseofSpace">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Minimal"/>
+        <xs:enumeration value="Moderate"/>
+        <xs:enumeration value="Extensive"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <!-- Content -->
+
+  <xs:element name="contentDescription">
+    <xs:complexType>
+      <xs:choice minOccurs="0" maxOccurs="unbounded">
+        <xs:element ref="niec:textType"/>
+        <xs:element ref="niec:register"/>
+        <xs:element ref="niec:captions"/>
+        <xs:element ref="niec:conversationType"/>
+        <xs:element ref="niec:audience"/>
+        <xs:element ref="niec:duration"/>
+        <xs:element ref="niec:overview"/>
+      </xs:choice>
+    </xs:complexType>
+  </xs:element>
+  <xs:element name="textType">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Inquiry/Dialog"/>
+        <xs:enumeration value="Narrative"/>
+        <xs:enumeration value="Expository"/>
+        <xs:enumeration value="Persuasive"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="register">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Frozen"/>
+        <xs:enumeration value="Formal"/>
+        <xs:enumeration value="Consultative"/>
+        <xs:enumeration value="Informal"/>
+        <xs:enumeration value="Intimate"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="captions">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Open Captions"/>
+        <xs:enumeration value="Closed Captions"/>
+        <xs:enumeration value="None"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="conversationType">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Dialogic"/>
+        <xs:enumeration value="Monologic"/>
+        <xs:enumeration value="Interactive"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="audience">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Student"/>
+        <xs:enumeration value="Working Interpreter"/>
+        <xs:enumeration value="Educator"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  
+  <xs:element name="duration">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <!-- Use pattern here? -->
+        <xs:pattern value="([0-9][0-9]:[0-9][0-9]:[0-9][0-9])"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+  <xs:element name="overview" type="xs:string"/>
+
+  <!-- Transcript -->
+
+  <xs:element name="transcript">
+    <xs:simpleType>
+      <xs:restriction base="xs:string">
+        <xs:enumeration value="Available"/>
+        <xs:enumeration value="Unavailable"/>
+      </xs:restriction>
+    </xs:simpleType>
+  </xs:element>
+
+  <!-- Series -->
+
+  <xs:element name="series" type="xs:string"/>
+
+  <!-- Comments -->
+
+  <xs:element name="comment"/>
+
+
+</xs:schema>
