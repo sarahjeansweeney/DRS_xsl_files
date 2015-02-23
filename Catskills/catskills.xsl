@@ -11,7 +11,15 @@
             <xsl:copy-of select="mods:genre"/>
             <xsl:if test="mods:originInfo">
                 <mods:originInfo>
-                    <xsl:copy-of select="mods:originInfo/mods:dateIssued"/>
+                    <xsl:choose>
+                    <xsl:when test="mods:originInfo/mods:dateIssued[3]">
+                        <xsl:copy-of select="mods:originInfo/mods:dateIssued[2]"/>
+                        <xsl:copy-of select="mods:originInfo/mods:dateIssued[3]"/>
+                    </xsl:when>
+                        <xsl:otherwise>
+                            <xsl:copy-of select="mods:originInfo/mods:dateIssued"/>
+                        </xsl:otherwise>
+                    </xsl:choose>
                     <xsl:copy-of select="mods:originInfo/mods:dateCreated"/>
                     <xsl:copy-of select="mods:originInfo/mods:dateCaptured"/>
                     <xsl:copy-of select="mods:originInfo/mods:dateValid"/>
