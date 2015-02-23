@@ -9,10 +9,18 @@
             <xsl:copy-of select="mods:name"/>
             <xsl:copy-of select="mods:typeOfResource"/>
             <xsl:copy-of select="mods:genre"/>
-            <!--<xsl:copy-of select="originInfo"/>-->
             <xsl:if test="mods:originInfo">
                 <mods:originInfo>
                     <xsl:copy-of select="mods:originInfo/mods:dateIssued"/>
+                    <xsl:copy-of select="mods:originInfo/mods:dateCreated"/>
+                    <xsl:copy-of select="mods:originInfo/mods:dateCaptured"/>
+                    <xsl:copy-of select="mods:originInfo/mods:dateValid"/>
+                    <xsl:copy-of select="mods:originInfo/mods:dateModified"/>
+                    <xsl:copy-of select="mods:originInfo/mods:copyrightDate"/>
+                    <xsl:copy-of select="mods:originInfo/mods:dateOther"/>
+                    <xsl:copy-of select="mods:originInfo/mods:edition"/>
+                    <xsl:copy-of select="mods:originInfo/mods:issuance"/>
+                    <xsl:copy-of select="mods:originInfo/mods:frequency"/>
                     <xsl:copy-of select="mods:originInfo/mods:publisher"/>
                     <xsl:if test="mods:originInfo/mods:place">
                         <mods:place>
@@ -130,7 +138,6 @@
                 </mods:originInfo>
             </xsl:if>
 
-            <!--<xsl:copy-of select="mods:language"/>-->
             <xsl:if test="mods:language">
                 <mods:language>
                     <xsl:for-each select="mods:language/mods:languageTerm">
