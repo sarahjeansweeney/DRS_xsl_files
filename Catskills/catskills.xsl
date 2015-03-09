@@ -3,8 +3,8 @@
     <xsl:strip-space elements="*"/>
     <xsl:output indent="yes" method="xml"/>
     <xsl:template match="/mods:mods">
-        <mods:mods xmlns:mods="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:METS="http://www.loc.gov/METS/" ID="cats001518"
-            xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-3.xsd">
+        <mods:mods xmlns:mods="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+            xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-5.xsd">
             <xsl:copy-of select="mods:titleInfo"/>
             <xsl:copy-of select="mods:name"/>
             <xsl:copy-of select="mods:typeOfResource"/>
