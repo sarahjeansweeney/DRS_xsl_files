@@ -3,7 +3,7 @@
     <xsl:strip-space elements="*"/>
     <xsl:output indent="yes" method="xml"/>
     <xsl:template match="/mods:mods">
-        <mods:mods xmlns:mods="http://www.loc.gov/mods/v3" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+        <mods:mods xmlns:mods="http://www.loc.gov/mods/v3" xmlns:METS="http://www.loc.gov/METS/" xmlns:xlink="http://www.w3.org/1999/xlink" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
             xsi:schemaLocation="http://www.loc.gov/mods/v3 http://www.loc.gov/standards/mods/v3/mods-3-5.xsd">
             <xsl:copy-of select="mods:titleInfo"/>
             <xsl:copy-of select="mods:name"/>
@@ -31,6 +31,7 @@
                     <xsl:copy-of select="mods:originInfo/mods:frequency"/>
                     <xsl:copy-of select="mods:originInfo/mods:publisher"/>
                     <xsl:if test="mods:originInfo/mods:place">
+                        <!-- Remove , State from most fields -->
                         <mods:place>
                             <xsl:for-each select="mods:originInfo/mods:place/mods:placeTerm">
                                 <xsl:if test=".[@type='code']">
@@ -155,6 +156,12 @@
                         <xsl:if test="contains(., 'eng')">
                             <mods:languageTerm authority="iso639-2b" type="text">English</mods:languageTerm>
                         </xsl:if>
+                        <xsl:if test="contains(., 'English')">
+                            <xsl:copy-of select="."/>
+                        </xsl:if>
+                        <xsl:if test="contains(., 'Hebrew')">
+                            <xsl:copy-of select="."/>
+                        </xsl:if>
                     </xsl:for-each>
                 </mods:language>
             </xsl:if>
@@ -171,7 +178,14 @@
             <xsl:copy-of select="mods:accessCondition"/>
             <xsl:copy-of select="mods:part"/>
             <xsl:copy-of select="mods:extension"/>
-            <xsl:copy-of select="mods:recordInfo"/>
+            <mods:recordInfo>
+                <mods:recordContentSource>Northeastern University Libraries</mods:recordContentSource>
+                <mods:recordOrigin>MODS records were migrated from the Brown Digital Repository and updated according to Northeastern cataloging standards.</mods:recordOrigin>
+                <mods:languageOfCataloging>
+                    <mods:languageTerm authority="iso639-2b" authorityURI="http://id.loc.gov/vocabulary/iso639-2" valueURI="http://id.loc.gov/vocabulary/iso639-2/eng" type="text">English</mods:languageTerm>
+                </mods:languageOfCataloging>
+                <mods:descriptionStandard authority="marcdescription">local</mods:descriptionStandard>
+            </mods:recordInfo>
         </mods:mods>
     </xsl:template>
 
