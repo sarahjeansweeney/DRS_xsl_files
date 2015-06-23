@@ -172,6 +172,7 @@
             <xsl:copy-of select="mods:note"/>
             <xsl:copy-of select="mods:subject"/>
             <xsl:copy-of select="mods:classification"/>
+            <!-- Need to remove Brown specific info and replace it with NU collection information -->
             <xsl:copy-of select="mods:relatedItem"/>
             <xsl:copy-of select="mods:identifier"/>
             <xsl:copy-of select="mods:location"/>
