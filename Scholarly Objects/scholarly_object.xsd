@@ -19,6 +19,7 @@
         <xs:enumeration value="Monographs"/>
         <xs:enumeration value="Presentations"/>
         <xs:enumeration value="Research Publications"/>
+        <xs:enumeration value="Technical Reports"/>
         <xs:enumeration value="Theses and Dissertations"/>
       </xs:restriction>
     </xs:simpleType>
