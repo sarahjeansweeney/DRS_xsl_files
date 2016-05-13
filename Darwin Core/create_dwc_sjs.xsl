@@ -9,7 +9,6 @@
         </dwr:SimpleDarwinRecordSet>
     </xsl:template>
 
-    <!-- Need proper rights statement -->
     <!-- Validate DWC schema when available: locationRemarks is not repeatable -->
 
     <xsl:template match="ROW">
@@ -83,31 +82,38 @@
                 <xsl:value-of select="$Family"/>
                 <xsl:text> - </xsl:text>
                 <xsl:value-of select="$Genus"/>
-                <xsl:text> - </xsl:text>
-                <!-- Species may often be present but empty - need to ignore empty or self closing elements -->
-                <xsl:if test="Species/DATA">
+                <xsl:if test="Species/DATA/text()">
+                    <xsl:text> - </xsl:text>
                     <xsl:value-of select="$Species"/>
                 </xsl:if>
             </dwc:higherClassification>
+
             <xsl:if test="Notes">
                 <dwc:organismRemarks>
                     <xsl:value-of select="Notes"/>
                 </dwc:organismRemarks>
             </xsl:if>
 
-            <!-- Selects all the values for some reason. Need only the value from the selected record. -->
-            <!--            
-            <xsl:if test="document('locations.xml')//ROW/SubstrateType">
+            <xsl:if test="document('locations.xml')//ROW[CollectionLocationID_pk = $CollectionLocationID_fk]/SubstrateType">
                 <dwc:locationRemarks>
-                <xsl:value-of select="document('locations.xml')//ROW/SubstrateType"/>
+                    <xsl:if test="document('locations.xml')//ROW[CollectionLocationID_pk = $CollectionLocationID_fk]/SubstrateType">
+                        <xsl:value-of select="document('locations.xml')//ROW[CollectionLocationID_pk = $CollectionLocationID_fk]/SubstrateType"/>
+                    </xsl:if>
+                    <xsl:if test="document('locations.xml')//ROW[CollectionLocationID_pk = $CollectionLocationID_fk]/Notes">
+                        <xsl:text>; </xsl:text>
+                        <xsl:value-of select="document('locations.xml')//ROW[CollectionLocationID_pk = $CollectionLocationID_fk]/Notes"/>
+                    </xsl:if>
                 </dwc:locationRemarks>
             </xsl:if>
-            -->
 
             <xsl:apply-templates/>
+
             <xsl:apply-templates select="document('locations.xml')//ROW[CollectionLocationID_pk = $CollectionLocationID_fk]" mode="auxilliary"/>
+
             <xsl:apply-templates select="document('events.xml')//ROW[CollectionEventID_pk = $CollectionEventID_fk]" mode="auxilliary"/>
+
             <xsl:apply-templates select="document('images.xml')//ROW[SpecimenID_fk = $SpecimenID_pk]/Filename"/>
+
             <xsl:if
                 test="document('events.xml')//ROW[CollectionEventID_pk = $CollectionEventID_fk]/VesselName/text() or document('events.xml')//ROW[CollectionEventID_pk = $CollectionEventID_fk]/CruiseNumber/text() or document('events.xml')//ROW[CollectionEventID_pk = $CollectionEventID_fk]/DiveNumber/text() or document('events.xml')//ROW[CollectionEventID_pk = $CollectionEventID_fk]/Notes/text()">
                 <dwc:fieldNotes>
@@ -117,100 +123,65 @@
                     <xsl:apply-templates select="document('events.xml')//ROW[CollectionEventID_pk = $CollectionEventID_fk]//Notes" mode="event"/>
                 </dwc:fieldNotes>
             </xsl:if>
-            <xsl:apply-templates select="document('locations.xml')//ROW[CollectionLocationID_pk = $CollectionLocationID_fk]/Notes" mode="location"/>
-            <xsl:apply-templates select="document('locations.xml')//ROW[CollectionLocationID_pk = $CollectionLocationID_fk]/SubstrateType" mode="location"/>
 
-            <!--          <dwc:locationRemarks>
-                <xsl:if test="document('locations.xml')//ROW/SubstrateType">
-                    <xsl:value-of select="document('locations.xml')//ROW/SubstrateType"/>
-                    <xsl:text> </xsl:text>
-                </xsl:if>
-                <xsl:if test="document('locations.xml')//ROW/Notes">
-                    <xsl:value-of select="document('locations.xml')//ROW/Notes"/>
-                </xsl:if>
-                
-            </dwc:locationRemarks>-->
+            <!--<xsl:apply-templates select="document('locations.xml')//ROW[CollectionLocationID_pk = $CollectionLocationID_fk]/Notes" mode="location"/>-->
+
+            <!--<xsl:apply-templates select="document('locations.xml')//ROW[CollectionLocationID_pk = $CollectionLocationID_fk]/SubstrateType" mode="location"/>-->
+
+<!-- organismID, identificationID, taxonID? -->
 
             <dwc:recordNumber>
                 <xsl:value-of select="$SpecimenID_pk"/>
             </dwc:recordNumber>
 
             <dcterms:accessRights>
-                <xsl:text>Rights status not evaluated.</xsl:text>
+                <xsl:text>This work is licensed for use under a Creative Commons Attribution License (CC BY).</xsl:text>
             </dcterms:accessRights>
 
         </dwr:SimpleDarwinRecord>
+
     </xsl:template>
 
     <xsl:template match="ROW" mode="auxilliary">
         <xsl:apply-templates/>
     </xsl:template>
 
-    <!-- obtain taxonomic data from specimens file-->
-    <!-- Replaced with variable selection sjs 4/29/16 -->
-
-    <!-- <xsl:template match="Kingdom">
-        <dwc:kingdom>
-            <xsl:value-of select="DATA"/>
-        </dwc:kingdom>
-    </xsl:template>
-    <xsl:template match="Phylum">
-        <dwc:phylum>
-            <xsl:value-of select="DATA"/>
-        </dwc:phylum>
-    </xsl:template>
-    <xsl:template match="Class">
-        <dwc:class>
-            <xsl:value-of select="DATA"/>
-        </dwc:class>
-    </xsl:template>
-    <xsl:template match="Order">
-        <dwc:order>
-            <xsl:value-of select="DATA"/>
-        </dwc:order>
-    </xsl:template>
-    <xsl:template match="Family">
-        <dwc:family>
-            <xsl:value-of select="DATA"/>
-        </dwc:family>
-    </xsl:template>
-    <xsl:template match="Genus">
-        <dwc:genus>
-            <xsl:value-of select="DATA"/>
-        </dwc:genus>
-    </xsl:template>
-    <xsl:template match="ScientificName">
-        <dwc:scientificName>
-            <xsl:value-of select="DATA"/>
-        </dwc:scientificName>
-    </xsl:template>-->
-
-
     <!-- Obtain location data from locations file -->
+
     <xsl:template match="Longitude">
         <dwc:decimalLongitude>
             <xsl:apply-templates/>
         </dwc:decimalLongitude>
     </xsl:template>
+
     <xsl:template match="Latitude">
         <dwc:decimalLatitude>
             <xsl:apply-templates/>
         </dwc:decimalLatitude>
     </xsl:template>
+
     <xsl:template match="Island">
-        <dwc:island>
-            <xsl:apply-templates/>
-        </dwc:island>
+        <xsl:if test="Island/text()">
+            <dwc:island>
+                <xsl:apply-templates/>
+            </dwc:island>
+        </xsl:if>
     </xsl:template>
+
     <xsl:template match="IslandGroup">
-        <dwc:islandGroup>
-            <xsl:apply-templates/>
-        </dwc:islandGroup>
+        <xsl:if test="IslandGroup/text()">
+            <dwc:islandGroup>
+                <xsl:apply-templates/>
+            </dwc:islandGroup>
+        </xsl:if>
     </xsl:template>
+
     <xsl:template match="Landmark">
-        <dwc:locality>
-            <xsl:apply-templates/>
-        </dwc:locality>
+        <xsl:if test="Landmark/text()">
+            <dwc:locality>
+                <xsl:apply-templates/>
+            </dwc:locality>
+        </xsl:if>
     </xsl:template>
 
     <xsl:template match="Depth">
@@ -219,10 +190,10 @@
             <xsl:text> m</xsl:text>
         </dwc:verbatimDepth>
     </xsl:template>
+
     <xsl:template match="Ocean">
         <dwc:waterbody>
             <xsl:apply-templates/>
-
             <xsl:if test="../Waterbody/text()">
                 <xsl:text> (</xsl:text>
                 <xsl:value-of select="../Waterbody"/>
@@ -236,26 +207,12 @@
             <xsl:apply-templates/>
         </dwc:country>
     </xsl:template>
+
     <xsl:template match="State">
         <dwc:stateProvince>
             <xsl:apply-templates/>
         </dwc:stateProvince>
     </xsl:template>
-
-<!-- locationRemarks is not repeatable -->
-
-    <xsl:template match="Notes" mode="location">
-        <dwc:locationRemarks>
-            <xsl:apply-templates/>
-        </dwc:locationRemarks>
-    </xsl:template>
-
-    <xsl:template match="SubstrateType" mode="location">
-        <dwc:locationRemarks>
-            <xsl:apply-templates/>
-        </dwc:locationRemarks>
-    </xsl:template>
-
 
 
     <!-- Obtain sampling data from events file -->
