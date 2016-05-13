@@ -128,7 +128,7 @@
 
             <!--<xsl:apply-templates select="document('locations.xml')//ROW[CollectionLocationID_pk = $CollectionLocationID_fk]/SubstrateType" mode="location"/>-->
 
-<!-- organismID, identificationID, taxonID? -->
+            <!-- organismID, identificationID, taxonID, catalogNumber? -->
 
             <dwc:recordNumber>
                 <xsl:value-of select="$SpecimenID_pk"/>
