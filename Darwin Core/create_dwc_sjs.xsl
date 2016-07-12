@@ -9,7 +9,11 @@
         </dwr:SimpleDarwinRecordSet>
     </xsl:template>
 
-    <!-- Validate DWC schema when available: locationRemarks is not repeatable -->
+<!-- Changes:
+    recordNumber (aka OGL SpecimenID) -> organismID and catalogNumber
+    materialSampleID (aka OGL filepath) -> associatedMedia
+    -->
+
 
     <xsl:template match="ROW">
         <xsl:variable name="CollectionEventID_fk">
