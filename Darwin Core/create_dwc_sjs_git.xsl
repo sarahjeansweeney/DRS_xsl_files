@@ -11,8 +11,8 @@
 
 <!-- Changes:
     [X] recordNumber (aka OGL SpecimenID) -> organismID
-    [ ] recordNumber (aka OGL SpecimenID) -> catalogNumber
-    [ ] materialSampleID (aka OGL filepath) -> associatedMedia
+    [X] recordNumber (aka OGL SpecimenID) -> catalogNumber
+    [X] materialSampleID (aka OGL filepath) -> associatedMedia
     -->
 
 
@@ -270,11 +270,19 @@
     </xsl:template>
 
     <!-- Obtain filename from images file -->
-    <xsl:template match="Filename">
+    <!-- Instructions from Charlotte: " In a later stage of this project, I'd eventually like to include data about our tissue and DNA samples, which seem to fall squarely in this definition and would have their own "materialSampleID"s. To minimize future confusion, could we instead use the field "associatedMedia" for images?" -->
+<!--    <xsl:template match="Filename">
         <dwc:materialSampleID>
             <xsl:apply-templates select="../FileStorageLocation"/>
             <xsl:value-of select="normalize-space(.)"/>
         </dwc:materialSampleID>
+    </xsl:template>-->
+    
+    <xsl:template match="Filename">
+        <dwc:associatedMedia>
+            <xsl:apply-templates select="../FileStorageLocation"/>
+            <xsl:value-of select="normalize-space(.)"/>
+        </dwc:associatedMedia>
     </xsl:template>
 
     <xsl:template match="FileStorageLocation">
