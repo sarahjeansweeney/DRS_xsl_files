@@ -10,7 +10,8 @@
     </xsl:template>
 
 <!-- Changes:
-    recordNumber (aka OGL SpecimenID) -> organismID and catalogNumber
+    recordNumber (aka OGL SpecimenID) -> organismID
+    recordNumber (aka OGL SpecimenID) -> catalogNumber
     materialSampleID (aka OGL filepath) -> associatedMedia
     -->
 
