@@ -10,9 +10,9 @@
     </xsl:template>
 
 <!-- Changes:
-    recordNumber (aka OGL SpecimenID) -> organismID
-    recordNumber (aka OGL SpecimenID) -> catalogNumber
-    materialSampleID (aka OGL filepath) -> associatedMedia
+    [X] recordNumber (aka OGL SpecimenID) -> organismID
+    [ ] recordNumber (aka OGL SpecimenID) -> catalogNumber
+    [ ] materialSampleID (aka OGL filepath) -> associatedMedia
     -->
 
 
@@ -135,9 +135,9 @@
 
             <!-- organismID, identificationID, taxonID, catalogNumber? -->
 
-            <dwc:recordNumber>
+            <dwc:organismID>
                 <xsl:value-of select="$SpecimenID_pk"/>
-            </dwc:recordNumber>
+            </dwc:organismID>
 
             <dcterms:accessRights>
                 <xsl:text>This work is licensed for use under a Creative Commons Attribution License (CC BY).</xsl:text>
