@@ -139,7 +139,7 @@
                 <xsl:value-of select="$SpecimenID_pk"/>
             </dwc:organismID>
             
-            <!-- Instructions from Charolotte: "Seems similar to our use of SpecimenID, although it refers to an Occurrence rather than an Organism. Perhaps also put SpecimenID here, because we use SpecimenID to refer to an organism as well as the particular “occurrence” of the organism when it was collected)" -->
+            <!-- Instructions from Charolotte: "[catalogNumber] Seems similar to our use of SpecimenID, although it refers to an Occurrence rather than an Organism. Perhaps also put SpecimenID here, because we use SpecimenID to refer to an organism as well as the particular “occurrence” of the organism when it was collected)" -->
             
             <dwc:catalogNumber>
                 <xsl:value-of select="$SpecimenID_pk"/>
