@@ -1,0 +1,64 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- Open Refine Template -->
+
+<!-- prefix -->
+
+<!-- remove prolog for the sake of validating this file, include in prefix in OR -->
+
+<!--<?xml version="1.0" encoding="UTF-8"?> -->
+<dwr:SimpleDarwinRecordSet xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+    xmlns:dcterms="http://purl.org/dc/terms/"
+    xmlns:dwc="http://rs.tdwg.org/dwc/terms/"
+    xmlns:dwr="http://rs.tdwg.org/dwc/xsd/simpledarwincore/"
+    xsi:schemaLocation="http://rs.tdwg.org/dwc/xsd/simpledarwincore/  http://rs.tdwg.org/dwc/xsd/tdwg_dwc_simple.xsd">
+
+<!-- row template -->
+
+
+
+    <dwr:SimpleDarwinRecord id="{{(cells["SpecimenID_pk (dwc:organismID)"].value)}}" filename="{{(cells["upload file name"].value)}}">
+        <dwc:organismID>{{(cells["SpecimenID_pk (dwc:organismID)"].value)}}</dwc:organismID>
+        <dwc:catalogNumber>{{(cells["dwc:catalogNumber"].value)}}</dwc:catalogNumber>
+        <dwc:basisOfRecord>{{(cells["SpecimenBasisOfRecord (dwc:basisOfRecord)"].value)}}</dwc:basisOfRecord>
+        <dwc:otherCatalogNumbers>{{(cells["SpecimenExternalID (dwc: otherCatalogNumbers)"].value)}}</dwc:otherCatalogNumbers>
+        <dwc:previousIdentifications>{{(cells["dwc:previousIdentifications"].value)}}</dwc:previousIdentifications>
+        <dwc:organismRemarks>{{(cells["SpecimenNotes (dwc:organismRemarks)"].value)}}</dwc:organismRemarks>
+        <dwc:identifiedBy>{{(cells["SpecimenIdentifiedByName (dwc:identifiedBy)"].value)}}</dwc:identifiedBy>
+        <dwc:taxonID>{{(cells["TaxonID (dwc:taxonID)"].value)}}</dwc:taxonID>
+        <dwc:kingdom>{{(cells["dwc:kingdom"].value)}}</dwc:kingdom>
+        <dwc:phylum>{{(cells["dwc:phylum"].value)}}</dwc:phylum>
+        <dwc:class>{{(cells["dwc:class"].value)}}</dwc:class>
+        <dwc:order>{{(cells["dwc:order"].value)}}</dwc:order>
+        <dwc:family>{{(cells["dwc:family"].value)}}</dwc:family>
+        <dwc:genus>{{(cells["dwc:genus"].value)}}</dwc:genus>
+        <dwc:higherClassification>{{(cells["dwc:higherClassification"].value)}}</dwc:higherClassification>
+        <dwc:specificEpithet>{{(cells["dwc:specificEpithet"].value)}}</dwc:specificEpithet>
+        <dwc:identificationQualifier>{{(cells["Taxon::TaxonIDQualifier (dwc:identificationQualifier)"].value)}}</dwc:identificationQualifier>
+        <dwc:scientificNameAuthorship>{{(cells["Taxon::TaxonAuthorYear (dwc: scientificNameAuthorship)"].value)}}</dwc:scientificNameAuthorship>
+        <dwc:scientificName>{{(cells["Taxon::TaxonScientificName lowest confident (dwc:scientificName)"].value)}}</dwc:scientificName>
+        <dwc:vernacularName>{{(cells["Taxon::TaxonCommonName (dwc:vernacularName)"].value)}}</dwc:vernacularName>
+        <dwc:locationID>{{(cells["LocationID (dwc:locationID)"].value)}}</dwc:locationID>
+        <dwc:waterbody>{{(cells["Location::LocationOcean (dwc:waterBody)"].value)}}</dwc:waterbody>
+        <dwc:higherGeography>{{(cells["dwc:higherGeography"].value)}}</dwc:higherGeography>
+        <dwc:verbatimDepth>{{(cells["dwc:verbatimDepth"].value)}}</dwc:verbatimDepth>
+        <dwc:decimalLatitude>{{(cells["dwc:decimalLatitude"].value)}}</dwc:decimalLatitude>
+        <dwc:decimalLongitude>{{(cells["dwc:decimalLongitude"].value)}}</dwc:decimalLongitude>
+        <dwc:country>{{(cells["Location::LocationNation dwc:country"].value)}}</dwc:country>
+        <dwc:countryCode>{{(cells["dwc:countryCode"].value)}}</dwc:countryCode>
+        <dwc:locationRemarks>{{(cells["dwc:locationRemarks"].value)}}</dwc:locationRemarks>
+        <dwc:eventID>{{(cells["CollectionEvent::CollectionEventID_pk (dwc:eventID)"].value)}}</dwc:eventID>
+        <dwc:eventDate>{{(cells["CollectionEvent::CollectionDate (dwc:eventDate) - text"].value)}}</dwc:eventDate>
+        <dwc:fieldNumber>{{(cells["CollectionEvent::CollectionEventName (dwc:fieldNumber)"].value)}}</dwc:fieldNumber>
+        <dwc:samplingProtocol>{{(cells["CollectionEvent::CollectionMethod (dwc:samplingProtocol)"].value)}}</dwc:samplingProtocol>
+        <dwc:fieldNotes>{{(cells["dwc:fieldNotes"].value)}}</dwc:fieldNotes>
+        <dcterms:accessRights>{{(cells["dcterms:accessRights"].value)}}</dcterms:accessRights>
+    </dwr:SimpleDarwinRecord>
+    
+
+<!-- row separator -->
+
+<!-- blank -->
+
+<!-- suffix -->
+
+</dwr:SimpleDarwinRecordSet>
